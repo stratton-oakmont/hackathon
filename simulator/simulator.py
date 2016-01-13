@@ -10,6 +10,7 @@ def execute_bot(bot, day, data):
     for strategy in bot:
         stock_data = data[strategy.stock]
         stock_data = stock_data[day-30:day]
+        #print strategy.stock, stock_data
         decision = strategy.func(stock_data)
         stock_dict[strategy.stock] += strategy.weight*decision
     return stock_dict
@@ -18,13 +19,14 @@ def compile_bot(bot_desc):
     """given a description of the bot genome, produce the python structure for it"""
     Strategy = collections.namedtuple('Strategy',['func','stock','weight'])
     bot = []
+    #normalize the weights: the total potential bot volume should be 1.0
+    total_weight = float(sum([abs(s[2]) for s in bot_desc]))
     for strategy_string in bot_desc:
         s = Strategy(func = technical_indicators_alt.func_ref[strategy_string[0]],
                 stock = strategy_string[1],
-                weight = strategy_string[2])
+                weight = strategy_string[2]/total_weight)
         bot.append(s)
     return bot
-
 
 def assets_change(stock_dict,assets,day,data):
     """given the stock buys and sells in the stock dict, calculate the net change in assets"""
@@ -45,6 +47,7 @@ def value_assets(assets, day, data):
 
 def simulate_bot(bot, start, end, data):
     """run the bot over the specified period.  At then end, calculate the total assets of the bot in cash on the end day"""
+    bot = compile_bot(bot)
     assets = collections.defaultdict(float)
     for day in tqdm.tqdm(xrange(start, end)):
         stock_decision = execute_bot(bot, day, data)

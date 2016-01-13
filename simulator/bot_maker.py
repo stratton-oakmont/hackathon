@@ -1,75 +1,89 @@
-
 # making the bots by having a random descriptor
-
 #loop over all bots
 import random
+import technical_indicators_alt, simulator
 
- for bot in list_of_bots
-def create_bot():
-    for bot in list_of_bots
+weights = [-1,-0.5,0.5,1]
 
-        wtlist = [-1, -0.5, 0.5, 1]
-        x = technical_indicators_alt.funct_ref.keys()
-        x.sort()
-        y = technical_indicators_alt.func_ref.keys()
-        y.sort()
+def create_bot(genome_stop_probability = 0.5):
+    bot = []
+    bot = add_chromosone(bot)
+    while random.random()>genome_stop_probability:
+    #randomly make descriptor for bot
+        bot = add_chromosone(bot)
+    return bot
 
-        for des_num in size_of_genome
-        #randomly make descriptor for bot
-
-
-            add_chromosone(bot)
-
-        return bot
-
-
-
-def functname_mut(bot):
-        x = technical_indicators_alt.funct_ref.keys()
-        x.sort()
-        functname = random.choice(x))
-        t = random.choice(bot)
-        lst = list(t)
-        lst[0] = wt
-        t = tuple(lst)
-        bot.append(t)
-        return bot
+def funcname_mut(bot):
+    x = technical_indicators_alt.func_ref.keys()
+    x.sort()
+    funcname = random.choice(x)
+    t = random.choice(bot)
+    bot.remove(t)
+    lst = list(t)
+    lst[0] = funcname
+    t = tuple(lst)
+    bot.append(t)
+    return bot
 
 def stockname_mut(bot):
-        y = technical_indicators_alt.func_ref.keys()
-        y.sort()
-        functname = random.choice(y)
-        t = random.choice(bot)
-        lst = list(t)
-        lst[1] = functname
-        t = tuple(lst)
-        bot.append(t)
-        return bot
+    y = simulator.data.keys()
+    y.sort()
+    stock_name = random.choice(y)
+    t = random.choice(bot)
+    bot.remove(t)
+    lst = list(t)
+    lst[1] = stock_name
+    t = tuple(lst)
+    bot.append(t)
+    return bot
 
 def wt_mut(bot):
-        wtlist = [-1, -0.5, 0.5, 1]
-        wt=random.choice(wtlist))
-        t = random.choice(bot)
-        lst = list(t)
-        lst[2] = wt
-        t = tuple(lst)
-        bot.append(t)
-        return bot
+    simulator.pprint_bot(bot)
+    wt=random.choice(weights)
+    t = random.choice(bot)
+    bot.remove(t)
+    lst = list(t)
+    lst[2] = wt
+    t = tuple(lst)
+    bot.append(t)
+    return bot
 
 def remove_chromosone(bot):
-        t = random.choice(bot)
-        del bot[t]
-
-        return bot
+    t = random.choice(bot)
+    bot.remove(t)
+    return bot
 
 def add_chromosone(bot):
-        wt=random.choice(wtlist))
-        functname = random.choice(x))
-        stock_name = random.choice(y))
-        lst[] = [wt,functname,stockname]
-        t=tuple(lst)
+    wt=random.choice(weights)
+    x = technical_indicators_alt.func_ref.keys()
+    x.sort()
+    func_name = random.choice(x)
+    y = simulator.data.keys()
+    y.sort()
+    stock_name = random.choice(y)
+    lst = [func_name,stock_name,wt]
+    t=tuple(lst)
+    bot.append(t)
+    return bot
 
-        bot.extend(t)
+def mutate_chromosone(bot):
+    """mutate one component of the bot chromosome, selected with uniform random probability"""
+    mods = [wt_mut, stockname_mut, funcname_mut]
+    mod = random.choice(mods)
+    return mod(bot)
 
+def test_bot_maker():
+    random.seed(103)
+    bot = create_bot(genome_stop_probability=0.3)
+    simulator.pprint_bot(bot)
+    bot = funcname_mut(bot)
+    simulator.pprint_bot(bot)
+    bot = stockname_mut(bot)
+    simulator.pprint_bot(bot)
+    bot = wt_mut(bot)
+    simulator.pprint_bot(bot)
+    bot = remove_chromosone(bot)
+    simulator.pprint_bot(bot)
 
-        return bot
+if __name__ == '__main__':
+    test_bot_maker()

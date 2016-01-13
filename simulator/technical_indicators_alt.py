@@ -826,6 +826,9 @@ def wma_close(price_array):
 
     wmas = np.zeros(wma_range)
 
+    #print(len(prices), period, wma_range)
+    #print(prices)
+
     k = (period * (period + 1)) / 2.0
 
     # only required for the commented code below
@@ -1240,7 +1243,7 @@ def ema_zero_close(price_array):
                     prices[idx + period - period_num - 1]
             emas[idx] /= k
 
-
+    #print(price_array)
     diff = emas[-1] - emas[-2]
 
     if diff > 1:
