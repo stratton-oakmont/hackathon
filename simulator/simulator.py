@@ -69,9 +69,10 @@ def parse_data():
         stock_name = folder
         folder_path = os.path.join(path,folder)
         f = open(os.path.join(folder_path,'quote.csv'),'r')
-        lines = f.readlines()
+        lines = f.read().split()
         f.close()
         stock_data = []
+        print len(lines)
         for l in lines[1:]:
             l = l.strip()
             if l!='':
@@ -86,6 +87,7 @@ def parse_data():
         stock_data = tuple(stock_data)
         stock_data = stock_data[::-1] #reverse the data
         data[stock_name] = stock_data
+        print len(stock_data)
     return data
 
 def test_execute_bot(data):

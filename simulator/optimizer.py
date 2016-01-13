@@ -53,7 +53,7 @@ def mutate(bot):
 
 def score_generation(gen):
     """score the generation over a period from start to end"""
-    periods = [random.randint(31,300) for n in xrange(10)]
+    periods = [random.randint(61,70) for n in xrange(10)]
     scores = []
     for bot in gen:
         avg_score = 0.0
