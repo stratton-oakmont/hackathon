@@ -5,7 +5,7 @@ import technical_indicators_alt, simulator
 
 weights = [-1,-0.8,-0.6,-0.4,-0.2,1,0.8,0.6,0.4,0.2]
 
-def create_bot(genome_stop_probability = 0.5):
+def create_bot(genome_stop_probability = 0.1):
     bot = []
     bot = add_chromosone(bot)
     while random.random()>genome_stop_probability:
