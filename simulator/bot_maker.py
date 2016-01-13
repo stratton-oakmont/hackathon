@@ -39,8 +39,8 @@ def stockname_mut(bot):
 
 def wt_mut(bot):
     #simulator.pprint_bot(bot)
-    #print
-    botbot.remove(t)
+    #print bot
+    bot.remove(t)
     lst = list(t)
     updown = random.random()
     if updown > 0.5:
