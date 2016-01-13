@@ -40,21 +40,24 @@ def stockname_mut(bot):
 def wt_mut(bot):
     #simulator.pprint_bot(bot)
     #print bot
+    t = random.choice(bot)
     bot.remove(t)
     lst = list(t)
+
     updown = random.random()
     if updown > 0.5:
         if lst[2]== 1:
                 return bot
-        lst[2] = lst[2] + 0.2
+        lst[2] = lst[2] + 0.3
     else:
         if lst[2]== -1:
                 return bot
-        lst[2] = lst[2] - 0.2
+        lst[2] = lst[2] - 0.3
 
     t = tuple(lst)
     bot.append(t)
     return bot
+
 
 def remove_chromosone(bot):
     t = random.choice(bot)
