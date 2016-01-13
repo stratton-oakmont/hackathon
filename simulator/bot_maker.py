@@ -4,7 +4,6 @@
 #loop over all bots
 import random
 
- for bot in list_of_bots
 def create_bot():
     for bot in list_of_bots
 
