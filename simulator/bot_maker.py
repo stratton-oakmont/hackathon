@@ -44,11 +44,11 @@ def wt_mut(bot):
     lst = list(t)
     updown = random.random()
     if updown > 0.5:
-        if lst[2]=1:
+        if lst[2]== 1:
                 return bot
         lst[2] = lst[2] + 0.2
     else:
-        if lst[2]=-1:
+        if lst[2]== -1:
                 return bot
         lst[2] = lst[2] - 0.2
 
