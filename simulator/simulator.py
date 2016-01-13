@@ -9,7 +9,7 @@ def execute_bot(bot, day, data):
     stock_dict = collections.defaultdict(float)
     for strategy in bot:
         stock_data = data[strategy.stock]
-        stock_data = stock_data[day-30:day]
+        stock_data = stock_data[day:day+30]
         #print strategy.stock, stock_data
         decision = strategy.func(stock_data)
         stock_dict[strategy.stock] += strategy.weight*decision
