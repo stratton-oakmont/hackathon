@@ -1,4 +1,4 @@
-import os, sys, random
+import os, sys, random, copy
 import simulator, technical_indicators_alt, bot_maker
 import tqdm
 
@@ -9,17 +9,23 @@ def initialize_population(pop_size):
     return pop
 
 def make_generation(seeds, num_children):
+    #print seeds
     pop = [None]*len(seeds)*(num_children+1)
     i = 0
     for seed in seeds:
+        #print seed
         pop[i] = seed
         i += 1
         for n in xrange(num_children):
+            #print seed
             #run one mutation, TODO: variable number of mutations based on size
-            bot = mutate(seed)
+            #print 'Seed: ',seed
+            bot = mutate(copy.deepcopy(seed))
+            #print bot, bot != []
             if bot != []:
-                pop[i] = mutate(bot)
+                pop[i] = bot
             else:
+                #print "creating new bot"
                 pop[i] = bot_maker.create_bot(genome_stop_probability=0.2)
             i += 1
     return pop
@@ -41,16 +47,21 @@ def mutate(bot):
     while choice>probabilities[i][0]:
         i+=1
     #execute the selected mutator
-    bot = probabilities[i][1](bot)
+    mod = probabilities[i][1]
+    bot = mod(bot)
     return bot
 
 def score_generation(gen):
     """score the generation over a period from start to end"""
-    period = 100#random.randint(31,40)
+    periods = [random.randint(31,300) for n in xrange(10)]
     scores = []
     for bot in gen:
-        score = simulator.simulate_bot(bot, period, period+5, simulator.data)
-        scores.append((score, bot))
+        avg_score = 0.0
+        for period in periods:
+            score = simulator.simulate_bot(bot, period, period+5, simulator.data)
+            avg_score += score
+        avg_score = avg_score/float(len(periods))
+        scores.append((avg_score, bot))
     scores.sort(key=lambda e:e[0])
     scores.reverse()
     return scores
@@ -67,6 +78,7 @@ def optimize(pop_size, num_gens, num_survivors, verbose = True):
             score = scores[0][0]
             std_score = simulator.simulate_bot(scores[0][1], standard_period, standard_period+5, simulator.data)
             print "Generation {},\tScore:{}\tStd score:{}".format(n+1,score,std_score)
+        #print survivors
         gen = make_generation(survivors,num_children)
     return scores
 

@@ -38,7 +38,8 @@ def stockname_mut(bot):
     return bot
 
 def wt_mut(bot):
-    simulator.pprint_bot(bot)
+    #simulator.pprint_bot(bot)
+    #print bot
     wt=random.choice(weights)
     t = random.choice(bot)
     bot.remove(t)
