@@ -3,7 +3,7 @@
 import random
 import technical_indicators_alt, simulator
 
-weights = [-1,-0.5,0.5,1]
+weights = [-1,-0.8,-0.6,-0.4,-0.2,1,0.8,0.6,0.4,0.2]
 
 def create_bot(genome_stop_probability = 0.5):
     bot = []
@@ -39,12 +39,19 @@ def stockname_mut(bot):
 
 def wt_mut(bot):
     #simulator.pprint_bot(bot)
-    #print bot
-    wt=random.choice(weights)
-    t = random.choice(bot)
-    bot.remove(t)
-    lst = list(t)
-    lst[2] = wt
+    #print
+    botbot.remove(t)
+    lst = list(t)    
+    updown = random.random()
+    if updown > 0.5:
+        if lst[2]=1:
+                return bot
+        lst[2] = lst[2] + 0.2
+    else:
+        if lst[2]=-1:
+                return bot
+        lst[2] = lst[2] - 0.2
+
     t = tuple(lst)
     bot.append(t)
     return bot
