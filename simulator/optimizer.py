@@ -32,7 +32,7 @@ def make_generation(seeds, num_children):
 
 def mutate(bot):
     """mutate the bot.  Provides a wrapper to bot_maker, allowing us to tweak probabilities of mutations"""
-    ratios = [(1,bot_maker.remove_chromosone),(3,bot_maker.mutate_chromosone),(1,bot_maker.add_chromosone)]
+    ratios = [(1,bot_maker.remove_chromosone),(10,bot_maker.mutate_chromosone),(5,bot_maker.add_chromosone)]
     total = float(sum(e[0] for e in ratios))
     threshold = 0.0
     thresholds = []

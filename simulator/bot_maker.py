@@ -41,7 +41,7 @@ def wt_mut(bot):
     #simulator.pprint_bot(bot)
     #print
     botbot.remove(t)
-    lst = list(t)    
+    lst = list(t)
     updown = random.random()
     if updown > 0.5:
         if lst[2]=1:
@@ -62,7 +62,7 @@ def remove_chromosone(bot):
     return bot
 
 def add_chromosone(bot):
-    wt=random.choice(weights)
+    wt=0.2
     x = technical_indicators_alt.func_ref.keys()
     x.sort()
     func_name = random.choice(x)
